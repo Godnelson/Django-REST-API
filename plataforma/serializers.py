@@ -21,3 +21,8 @@ class UsuariosSerializer(serializers.ModelSerializer):
         model = Usuarios
         fields = '__all__'
 
+class FavoritosSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Favoritos
+        fields = '__all__'
+

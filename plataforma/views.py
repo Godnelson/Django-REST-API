@@ -139,3 +139,35 @@ def UsuariosViewSet(request, pk=''):
         elif request.method == 'DELETE':
             queryset.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
+        
+@api_view(['GET', 'POST', 'PUT', 'DELETE'])
+def FavoritosViewSet(request, pk=''):
+    if pk == '':
+        if request.method == 'GET':
+            queryset = Favoritos.objects.all()
+            serializer = FavoritosSerializer(queryset, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        elif request.method == 'POST':
+            serializer = FavoritosSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    else:
+        try:
+            queryset = Favoritos.objects.get(id=pk)
+        except Favoritos.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        if request.method == 'GET':
+            serializer = FavoritosSerializer(queryset)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        elif request.method == 'PUT':
+            serializer = FavoritosSerializer(queryset, data = request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        elif request.method == 'DELETE':
+            queryset.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)

@@ -13,4 +13,6 @@ urlpatterns = [
     path('assinatura/<pk>', views.AssinaturaViewSet),
     path('usuarios/', views.UsuariosViewSet),
     path('usuarios/<pk>', views.UsuariosViewSet),
+    path('favoritos/', views.FavoritosViewSet),
+    path('favoritos/<pk>', views.FavoritosViewSet),
 ]
