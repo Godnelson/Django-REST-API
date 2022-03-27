@@ -1,3 +1,4 @@
+from email.policy import default
 from tkinter import CASCADE
 from django.db import models
 
@@ -12,6 +13,7 @@ class Categoria(models.Model):
 class Filmes(models.Model):
     name = models.CharField(max_length=255)
     categoria_id = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to ='media/movies_covers', default='')
     def __str__(self):
         return self.name
 
