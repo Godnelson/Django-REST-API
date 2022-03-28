@@ -46,7 +46,8 @@ def FilmesViewSet(request, pk=''):
     if pk == '':
         if request.method == 'GET':
             queryset = Filmes.objects.all()
-            serializer_class = FilmesSerializer(queryset, many=True)
+            serializer_class = FilmesSerializer(queryset, context={"request": 
+                      request}, many=True)
             return Response(serializer_class.data)
         elif request.method == 'POST':
             serializer = FilmesSerializer(data=request.data)
@@ -61,7 +62,8 @@ def FilmesViewSet(request, pk=''):
         except Filmes.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
         if request.method == 'GET':
-            serializer = FilmesSerializer(queryset)
+            serializer = FilmesSerializer(queryset, context={"request": 
+                      request})
             return Response(serializer.data, status=status.HTTP_200_OK)
         if request.method == 'PUT':
             serializer = FilmesSerializer(queryset, data=request.data)
